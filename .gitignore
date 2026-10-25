@@ -10,3 +10,6 @@ report-*.json
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# extract4.cjs 的生成物
+todo4.json
