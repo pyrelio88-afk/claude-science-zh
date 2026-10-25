@@ -1,0 +1,16 @@
+{
+  "name": "claude-science-zh",
+  "version": "0.1.70.5",
+  "description": "Claude Science 桌面端汉化补丁（运行时翻译层 + 语言开关，英文基线可精确还原）",
+  "private": true,
+  "scripts": {
+    "build": "node build-runtime.cjs",
+    "apply": "node apply.cjs && node build-runtime.cjs",
+    "restore": "node restore.cjs",
+    "extract": "node extract4.cjs 80"
+  },
+  "dependencies": {
+    "acorn": "^8.11.3"
+  },
+  "license": "MIT"
+}

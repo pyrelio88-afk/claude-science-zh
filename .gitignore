@@ -1,0 +1,12 @@
+# 依赖与构建产物
+node_modules/
+.backup/
+report-*.json
+*.log
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+.DS_Store
