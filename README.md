@@ -16,7 +16,7 @@
 
 ## 界面截图
 
-*（安装后建议补充实际截图）*
+![Claude Science 中文主界面](docs/images/zh-CN-home.png)
 
 ## 适用环境
 
