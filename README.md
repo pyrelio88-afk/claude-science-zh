@@ -60,7 +60,7 @@ node build-runtime.cjs "C:\<你>\.claude-science\runtime\0.1.70-release\web-dist
 
 ```powershell
 # 1) 打开词典文件（JSON），键 = 英文原文，值 = 中文
-#    zh-CN-0.1.70.json / zh-cn-longtail.json / zh-cn-b2..b10.json 任选
+#    zh-CN-0.1.70.json / zh-CN-longtail.json / zh-CN-config.json 等任选
 
 # 2) 重新生成运行时词典
 node build-runtime.cjs
@@ -90,7 +90,10 @@ node build-runtime.cjs
 | `apply.cjs` | 可选静态补丁，用于彻底消除首屏英文闪烁 |
 | `restore.cjs` | 从 `.backup/` 还原英文 |
 | `extract4.cjs` | 找出还没翻译的界面文案（数据驱动下一批翻译） |
-| `zh-CN-0.1.70.json` 等 | 分批评量词条（核心词典） |
+| `zh-CN-0.1.70.json` | 主线核心词典（对应 Claude Science 0.1.70） |
+| `zh-CN-config.json` / `zh-CN-connectors.json` / `zh-CN-model-auth.json` / `zh-CN-session.json` | 分区域词条（配置/连接器/模型授权/会话） |
+| `zh-CN-misc-6.json` … `zh-CN-misc-10.json` | 杂项补丁批次 |
+| `zh-CN-longtail.json` | 长尾补词 |
 | `kit/zh-CN.json`、`kit/zh-CN-extra.json` | 早期积累基础词条 |
 | `docs/汉化工作流.md` | 给维护者的完整实现与实测记录 |
 
