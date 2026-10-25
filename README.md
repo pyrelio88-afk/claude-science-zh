@@ -1,5 +1,9 @@
 # Claude Science 中文汉化补丁
 
+<p align="center">
+  <img src="docs/images/claude-science.png" alt="Claude Science" width="128">
+</p>
+
 一个用于 **Claude Science 桌面端**的中文界面汉化补丁，支持简体中文 / English 语言切换，安装后即装即用，英文可随时还原。
 
 适用于 Claude Science `0.1.70`（原生 Windows 版）。
