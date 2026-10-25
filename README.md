@@ -5,6 +5,18 @@
 > 面向 Claude Science `0.1.70` 原生 Windows 安装
 > （`claude-science.exe` + `~/.claude-science/runtime/<版本>/web-dist`）。
 
+## 版本对应
+
+**本仓库版本号 = 所适配的 Claude Science 版本号**，一一对应：
+
+| 本仓库 | Claude Science | runtime 目录 |
+|---|---|---|
+| `0.1.70` | `0.1.70` | `0.1.70-release` |
+
+应用升级后，把本仓库版本改成对应的新版本号，再重跑 `node build-runtime.cjs` 即可。
+`package.json` 里另有 `claudeScienceVersion`（适配的应用版本）与 `runtimeRev`
+（注入脚本的缓存版本，改 `zh-runtime.js` 时必须 +1，与仓库版本号相互独立）。
+
 ---
 
 ## 一、为什么不是「翻译一下 chunk」那么简单

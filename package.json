@@ -1,6 +1,8 @@
 {
   "name": "claude-science-zh",
-  "version": "0.1.70.5",
+  "version": "0.1.70",
+  "claudeScienceVersion": "0.1.70",
+  "runtimeRev": "v5",
   "description": "Claude Science 桌面端汉化补丁（运行时翻译层 + 语言开关，英文基线可精确还原）",
   "private": true,
   "scripts": {
