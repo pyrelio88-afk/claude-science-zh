@@ -4,7 +4,7 @@
   <img src="docs/images/claude-science.png" alt="Claude Science" width="128">
 </p>
 
-<p align="center">一个用于 Claude Science Windows 桌面端的中文界面汉化补丁，支持简体中文 / English 语言切换，即装即用。</p>
+<p align="center">一个用于 <strong>Claude Science Windows 桌面端</strong>的中文界面汉化补丁，支持简体中文 / English 语言切换，即装即用。</p>
 
 ## 功能特点
 
