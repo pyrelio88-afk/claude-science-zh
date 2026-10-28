@@ -23,8 +23,17 @@
 ## 适用环境
 
 - Windows（原生 Windows 版 Claude Science）
-- 已安装 Claude Science `0.1.70`（web-dist 出现在 `~/.claude-science/runtime/0.1.70-release/web-dist`）
+- Claude Science `0.1.70` / `0.1.71`（及其后版本）：只往 web-dist 注入，不区分版本号，升级后重跑一次即可
 - 需要 [Node.js](https://nodejs.org/)（`build-runtime.cjs` 运行用）
+
+### web-dist 在哪
+
+默认安装在 `~/.claude-science/runtime/<版本>/web-dist`。
+但 `~/.claude-science/config.toml` 里的 `data_dir` 若被改过（自定义/绿色版安装），
+真正在运行的 web-dist 就在 `<data_dir>/runtime/<版本>/web-dist`。
+
+`build-runtime.cjs` **两处都会自动探测并全部注入**。若你曾遇到"脚本说成功、界面没变化"，
+多半就是只补了默认路径那份、而实际运行的那份在 `data_dir` 下。
 
 ## 使用方式
 
@@ -123,11 +132,17 @@ node build-runtime.cjs   # apply 会重写 index.html，需重建脚本注入
 
 ## 更新后处理
 
-Claude Science 升级后，web-dist 版本目录会变化，只需：
+Claude Science 升级后，web-dist 版本目录会变化（例如 `0.1.70-release` → `0.1.71-release`），
+**旧版本的汉化不会自动跟到新版本**。只需：
 
-1. 用新版 web-dist 路径重跑 `node build-runtime.cjs`（自动探测新版本目录）。
+1. 用新版 web-dist 路径重跑 `node build-runtime.cjs`（自动探测新版本目录，无需改脚本）。
 2. 若仍有界面文案未汉化，用 `extract4.cjs` 找出"漏网之鱼"并补齐词典。
 3. 若脚本有修改，请同步更新 `build-runtime.cjs` 里的缓存版本号（见下）。
+
+> **注意**：如果你有自动启动脚本（例如自定义的 `Start-ScienceNative.ps1`）里写了
+> "检测到 `index.html` 缺 `zh-runtime.js` 就重注入"的自愈逻辑，**不要在里面写死版本号**——
+> 写死 `0.1.70-release` 会导致升级后自愈一直给旧版本打补丁、新版本永远补不上。
+> 正确做法是遍历所有 `*-release` 目录逐个检查。
 
 > **缓存版本号说明**：浏览器会按脚本 URL 缓存。改过 `zh-runtime.js` 后，需要把
 > `build-runtime.cjs` 里的脚本版本号 +1，让 URL 变化以绕过缓存，否则页面会一直加载旧脚本。
@@ -150,6 +165,25 @@ Claude Science 升级后，web-dist 版本目录会变化，只需：
 3. daemon 自行生成的 HTML（如登录中转页、错误页），不在 web-dist 目录内，属另一层。
 
 新版本新增、尚未翻译的字段会**保留英文**，不影响使用。
+
+---
+
+## 更新记录
+
+### 2026-10-28 — 支持 0.1.71 · 修正自定义 data_dir 的探测盲点
+
+- **修**：`build-runtime.cjs` 的自动探测原来只扫 `~/.claude-science/runtime`。
+  当 `config.toml` 的 `data_dir` 指向别处时，真正在运行的 web-dist 探测不到 ——
+  脚本报告成功，界面却毫无变化。现在会同时读 `config.toml` 的 `data_dir`，
+  两处 web-dist **全部注入**。
+- **加**：README 补充「web-dist 在哪」与自动探测说明，并记录
+  "不要在自愈脚本里写死版本号"这一升级后失效的典型坑。
+- **验**：Claude Science `0.1.71` 实测通过（`0.1.70-release` / `0.1.71-release` 同时注入成功）。
+
+### 2026-10-26 — 0.1.70 词条完成
+
+- 词典合并至 2017 条，覆盖主界面 / 设置 / 连接器 / 模型授权 / 会话 / 计算资源等面板。
+- 运行时层改为按文本节点匹配，不再改资源 chunk；升级后只需重跑 `build-runtime.cjs`。
 
 ---
 

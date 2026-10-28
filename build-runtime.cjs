@@ -18,15 +18,34 @@ const RUNTIME_VER = 'v5';
 const TAG = `<script src="./assets/zh-runtime.js?${RUNTIME_VER}" defer></script>`;
 const TAG_RE = /<script src="\.\/assets\/zh-runtime\.js[^"]*"[^>]*><\/script>/;
 
-/** 自动探测：~/.claude-science/runtime/<版本>/web-dist */
+/** 读取 config.toml 的 data_dir —— 安装到自定义目录时，web-dist 在这里而不在 ~/.claude-science */
+function readDataDir() {
+  try {
+    const cfg = fs.readFileSync(path.join(os.homedir(), '.claude-science', 'config.toml'), 'utf8');
+    const m = cfg.match(/^\s*data_dir\s*=\s*"([^"]+)"/m);
+    if (m && m[1]) return path.normalize(m[1]);
+  } catch { /* 没有 config.toml 或读不到：忽略，退回默认根 */ }
+  return null;
+}
+
+/** 自动探测 web-dist：
+ *   ① ~/.claude-science/runtime/<版本>/web-dist           （默认安装）
+ *   ② <data_dir>/runtime/<版本>/web-dist                  （config.toml 改了 data_dir 的安装）
+ *  两者都会探测，全部注入 —— 避免"补了旧的那份、真正在跑的那份没动"。
+ */
 function detectTargets() {
+  const roots = [path.join(os.homedir(), '.claude-science', 'runtime')];
+  const dd = readDataDir();
+  if (dd) roots.push(path.join(dd, 'runtime'));
+
   const out = [];
-  const root = path.join(os.homedir(), '.claude-science', 'runtime');
-  let versions = [];
-  try { versions = fs.readdirSync(root); } catch { return out; }
-  for (const v of versions) {
-    const wd = path.join(root, v, 'web-dist');
-    if (fs.existsSync(path.join(wd, 'index.html'))) out.push(wd);
+  for (const root of roots) {
+    let versions = [];
+    try { versions = fs.readdirSync(root); } catch { continue; }
+    for (const v of versions) {
+      const wd = path.join(root, v, 'web-dist');
+      if (fs.existsSync(path.join(wd, 'index.html'))) out.push(wd);
+    }
   }
   return out;
 }
