@@ -22,18 +22,8 @@
 
 ## 适用环境
 
-- Windows（原生 Windows 版 Claude Science）
-- Claude Science `0.1.70` / `0.1.71`（及其后版本）：只往 web-dist 注入，不区分版本号，升级后重跑一次即可
+- Claude Science `0.1.71`（Windows 原生版）
 - 需要 [Node.js](https://nodejs.org/)（`build-runtime.cjs` 运行用）
-
-### web-dist 在哪
-
-默认安装在 `~/.claude-science/runtime/<版本>/web-dist`。
-但 `~/.claude-science/config.toml` 里的 `data_dir` 若被改过（自定义/绿色版安装），
-真正在运行的 web-dist 就在 `<data_dir>/runtime/<版本>/web-dist`。
-
-`build-runtime.cjs` **两处都会自动探测并全部注入**。若你曾遇到"脚本说成功、界面没变化"，
-多半就是只补了默认路径那份、而实际运行的那份在 `data_dir` 下。
 
 ## 使用方式
 
